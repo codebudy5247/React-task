@@ -3,6 +3,7 @@ import { Row } from "react-bootstrap";
 
 import { useQuery } from "react-query";
 import Expand from "./Accordion";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const getContacts = async () => {
   const response = await fetch(
@@ -12,20 +13,29 @@ const getContacts = async () => {
 };
 
 const Home = () => {
-  const { status, data , error } = useQuery("contacts", getContacts);
+  const { status, data, error } = useQuery("contacts", getContacts);
   console.log(data);
   const [searchTerm, setSearchTerm] = useState("");
 
   if (status === "loading") {
     return (
       <div>
-        <h1>loading...</h1>
+        <center>
+          <CircularProgress />
+        </center>
       </div>
     ); // loading state
   }
 
   if (status === "error") {
-    return <div>{error.message}</div>; // error state
+    return (
+      <div>
+        {" "}
+        <center>
+          <h1>{error.message}</h1>{" "}
+        </center>
+      </div>
+    ); // error state
   }
 
   return (
